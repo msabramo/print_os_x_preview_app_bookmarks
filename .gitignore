@@ -1,1 +1,4 @@
 *.egg-info
+bin/
+develop-eggs/
+.installed.cfg
