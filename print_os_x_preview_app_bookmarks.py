@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-import os
+import os, json
 from Cocoa import *
+# from huTools.structured import dict2xml, list2xml
 
 def getPlistFilename():
     return '%s/Library/Preferences/com.apple.Preview.bookmarks.plist' % os.getenv('HOME')
@@ -77,10 +78,15 @@ plist             = NSDictionary.dictionaryWithContentsOfFile_(plistFilename)
 bookmarksArray    = plist['bookmarksArray']
 data              = getData(bookmarksArray.bytes())
 bookmarks         = NSKeyedUnarchiver.unarchiveObjectWithData_(data)
+bookmarksList     = []
 
 for bookmark in bookmarks:
-    print("{")
-    print("    'label': %r," % bookmark._label)
-    print("    'pageIndex': %r," % bookmark._pageIndex)
-    print("    'file': %r," % bookmark._file.__dict__)
-    print("},")
+    bookmarksList.append({
+            'label': bookmark._label,
+            'pageIndex': bookmark._pageIndex,
+            'file': {'filename': bookmark._file.filename},
+            })
+
+print(json.dumps(bookmarksList, sort_keys=True, indent=4))
+
+# print(list2xml(bookmarksList, root='bookmarks', elementname='bookmark'))
