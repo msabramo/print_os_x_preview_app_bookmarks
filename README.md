@@ -6,7 +6,6 @@ bookmarks, stored in
 How did I figure this out?
 
 1. Install [class-dump](http://www.codethecode.com/projects/class-dump/).
-2. Run it. The `awk` is just to filter the output to show just the `PVBookmark` class.
-
     $ brew install class-dump
+2. Run it. The `awk` is just to filter the output to show just the `PVBookmark` class.
     $ class-dump /Applications/Preview.app | awk '/@interface PVBookmark/, /@end/ { print; }'
